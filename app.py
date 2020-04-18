@@ -5,30 +5,31 @@ from werkzeug.utils import secure_filename
 import os
 import uuid
 
-
-
 app = Flask(__name__)
 UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/', methods=['GET'])
 def home():
     return render_template("index.html")
 
+
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/predict/malaria', methods=['POST', 'GET'])
 def malaria():
     if request.method == 'POST':
-            # check if the post request has the file part
+        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -43,20 +44,24 @@ def malaria():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             try:
-                result = predict_malaria(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                result = predict_malaria(
+                    os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 if result:
                     result_response["result"] = "True"
                 else:
                     result_response["result"] = "False"
-                return render_template("result.html", result=result_response["result"], filename=filename)
+                return render_template("result.html",
+                                       result=result_response["result"],
+                                       filename=filename)
             except Exception:
                 return redirect("/")
         return redirect("/")
 
+
 @app.route('/predict/pneumonia', methods=['POST', 'GET'])
 def pneumonia():
     if request.method == 'POST':
-            # check if the post request has the file part
+        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -71,12 +76,15 @@ def pneumonia():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             try:
-                result = predict_pneumonia(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                result = predict_pneumonia(
+                    os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 if result:
                     result_response["result"] = "True"
                 else:
                     result_response["result"] = "False"
-                return render_template("result.html", result=result_response["result"], filename=filename)
+                return render_template("result.html",
+                                       result=result_response["result"],
+                                       filename=filename)
             except Exception:
                 return redirect("/")
         return redirect("/")

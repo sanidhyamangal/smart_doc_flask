@@ -11,7 +11,7 @@ def predict_malaria(base64image) -> bool:
     :return: a bool value wether malaria is detected or not.
     """
     # load malaria model
-    
+
     model = tf.keras.models.load_model('./trained_models/cnn_malaria.h5')
 
     # get image path and open it using tf
