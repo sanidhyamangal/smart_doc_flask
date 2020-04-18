@@ -15,8 +15,8 @@ def predict_malaria(base64image) -> bool:
     model = tf.keras.models.load_model('./trained_models/cnn_malaria.h5')
 
     # get image path and open it using tf
-    img_decode = tf.image.decode_image(
-        base64.b64decode(base64image.split(';base64,').pop()))
+    raw_image = tf.io.read_file(base64image)
+    img_decode = tf.image.decode_image(raw_image)
     # resize image based on model arch
     image_to_predict = tf.image.resize(img_decode, size=[
         150, 150
@@ -34,9 +34,9 @@ def predict_pneumonia(base64image) -> bool:
     :param base64image:
     :return: bool value about whether pneumonia is detected or not
     """
-    img_decode = tf.image.decode_image(
-        base64.b64decode(base64image))
-
+    raw_image = tf.io.read_file(base64image)
+    img_decode = tf.image.decode_image(raw_image)
+    # print(img_decode)
     # resize image based on model arch
     image_to_predict = tf.image.resize(img_decode, size=[
         150, 150
