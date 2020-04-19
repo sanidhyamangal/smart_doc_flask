@@ -3,9 +3,7 @@ version: '3.4'
 services:
   web:
     image: smartdocflask
-    command: flask run --host=0.0.0.0 --port=5000
-    environment: 
-      - FLASK_APP=app.py
+    command: gunicorn --bind 0.0.0.0:5000 app:app
     build:
       context: .
       dockerfile: Dockerfile
