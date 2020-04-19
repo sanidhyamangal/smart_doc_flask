@@ -6,5 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      command: python app.py
     ports:
       - 5000
