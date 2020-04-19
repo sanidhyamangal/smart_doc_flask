@@ -3,7 +3,9 @@ version: '3.4'
 services:
   web:
     image: smartdocflask
-    command: python app.py
+    command: flask run --host=0.0.0.0 --port=80
+    environment: 
+      - FLASK_APP = app/main.py
     build:
       context: .
       dockerfile: Dockerfile
