@@ -26,7 +26,7 @@ WORKDIR /app
 ADD . /app
 
 # unziping the model files
-RUN unzip /app/trained_models/cnn_malaria.zip && unzip /app/trained_models/cnn_malaria.zip
+RUN unzip /app/trained_models/cnn_malaria.zip && unzip /app/trained_models/cnn_pneumonia.zip
 
 # During debugging, this entry point will be overridden. For more information, refer to https://aka.ms/vscode-docker-python-debug
 CMD ["flask", "run"]
