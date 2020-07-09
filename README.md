@@ -1,6 +1,12 @@
-# smart_doc_flask
+# Smart Doc Flask
 A Flask based App for perfroming diagnosis of Malaria cells and Chest X-ray for pneumonia detection. 
 
+### Docker Pull command:
+```cmd
+docker pull sanidhyamangal/smart_doc
+```
+
+### [Github link](https://github.com/sanidhyamangal/smart_doc_flask)
 
 ### Requirements
 ```txt
