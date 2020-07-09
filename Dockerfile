@@ -1,7 +1,7 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM python:3.7
 
-EXPOSE 5000
+EXPOSE 80
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -26,7 +26,7 @@ WORKDIR /app
 ADD . /app
 
 # unziping the model files
-RUN unzip /app/trained_models/cnn_malaria.zip && unzip /app/trained_models/cnn_pneumonia.zip
+RUN unzip /app/trained_models/cnn_malaria.zip -d /app/trained_models/ && unzip /app/trained_models/cnn_pneumonia.zip /app/trained_models/ && rm -rf /app/trained_models/*.zip
 
 # During debugging, this entry point will be overridden. For more information, refer to https://aka.ms/vscode-docker-python-debug
 CMD ["flask", "run"]
